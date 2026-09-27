@@ -1,12 +1,17 @@
 package com.mycompany.quickchat;
 
+/**
+ * Validates registration details, stores a registered account in memory, and
+ * checks login credentials.
+ */
 public class Login {
+
     private String firstName;
-private String lastName;
-private String registeredUsername;
-private String registeredPassword;
-private String registeredCellPhoneNumber;
-private boolean registered = false;
+    private String lastName;
+    private String registeredUsername;
+    private String registeredPassword;
+    private String registeredCellPhoneNumber;
+    private boolean registered = false;
 
     public boolean checkUserName(String username) {
         return username != null
@@ -42,10 +47,10 @@ private boolean registered = false;
 
         return hasUppercase && hasNumber && hasSpecialCharacter;
     }
-    
-        /**
-     * Checks the international number format used in the POE example.
-     * Regex syntax reference: Oracle, Java SE 21 Pattern documentation.
+
+    /**
+     * Checks the international number format used in the POE example. Regex
+     * syntax reference: Oracle, Java SE 21 Pattern documentation.
      * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html
      * Accessed: 27 September 2026.
      */
@@ -53,8 +58,8 @@ private boolean registered = false;
         return cellPhoneNumber != null
                 && cellPhoneNumber.matches("[+]27[1-9][0-9]{8}");
     }
-   
-        public String registerUser(String firstName, String lastName,
+
+    public String registerUser(String firstName, String lastName,
             String username, String password, String cellPhoneNumber) {
 
         if (!checkUserName(username)) {
@@ -84,12 +89,14 @@ private boolean registered = false;
 
         return "User registered successfully.";
     }
-            public boolean loginUser(String username, String password) {
+
+    public boolean loginUser(String username, String password) {
         return registered
                 && registeredUsername.equals(username)
                 && registeredPassword.equals(password);
     }
-                public String returnLoginStatus(String username, String password) {
+
+    public String returnLoginStatus(String username, String password) {
         if (loginUser(username, password)) {
             return "Welcome " + firstName + ", " + lastName
                     + " it is great to see you again.";
@@ -97,7 +104,8 @@ private boolean registered = false;
 
         return "Username or password incorrect, please try again.";
     }
-                    public String returnPasswordStatus(String password) {
+
+    public String returnPasswordStatus(String password) {
         if (checkPasswordComplexity(password)) {
             return "Password successfully captured.";
         }
@@ -107,8 +115,8 @@ private boolean registered = false;
                 + "characters, a capital letter, a number, "
                 + "and a special character.";
     }
-                    
-                        public String returnCellPhoneStatus(String cellPhoneNumber) {
+
+    public String returnCellPhoneStatus(String cellPhoneNumber) {
         if (checkCellPhoneNumber(cellPhoneNumber)) {
             return "Cell number successfully captured.";
         }

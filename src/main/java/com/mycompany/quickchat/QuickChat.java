@@ -2,6 +2,10 @@ package com.mycompany.quickchat;
 
 import java.util.Scanner;
 
+/**
+ * Runs the QuickChat console registration and login process. Uses the Login
+ * class to validate details and authenticate the user.
+ */
 public class QuickChat {
 
     public static void main(String[] args) {
@@ -17,9 +21,8 @@ public class QuickChat {
         String lastName = input.nextLine();
 
         System.out.println("Hello " + firstName + " " + lastName);
-        
-        
-                String username;
+
+        String username;
 
         do {
             System.out.print("Enter a username: ");
@@ -34,29 +37,29 @@ public class QuickChat {
                         + "is no more than five characters in length.");
             }
         } while (!login.checkUserName(username));
-        
-                String password;
+
+        String password;
 
         do {
             System.out.print("Enter a password: ");
             password = input.nextLine();
 
-             System.out.println(login.returnPasswordStatus(password));
-            
+            System.out.println(login.returnPasswordStatus(password));
+
         } while (!login.checkPasswordComplexity(password));
-        
-                String cellPhoneNumber;
+
+        String cellPhoneNumber;
 
         do {
             System.out.print("Enter your cellphone number with +27: ");
             cellPhoneNumber = input.nextLine();
 
-                        System.out.println(
+            System.out.println(
                     login.returnCellPhoneStatus(cellPhoneNumber));
-            
+
         } while (!login.checkCellPhoneNumber(cellPhoneNumber));
-        
-                String registrationMessage = login.registerUser(
+
+        String registrationMessage = login.registerUser(
                 firstName,
                 lastName,
                 username,
@@ -64,8 +67,8 @@ public class QuickChat {
                 cellPhoneNumber);
 
         System.out.println(registrationMessage);
-        
-                String loginUsername;
+
+        String loginUsername;
         String loginPassword;
         boolean loggedIn;
 
