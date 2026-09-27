@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.quickchat;
 
 public class QuickChat {
@@ -14,5 +10,11 @@ public class QuickChat {
 
         System.out.println("Invalid username: "
                 + login.checkUserName("kyle!!!!!!!"));
+
+        System.out.println("Valid password: "
+                + login.checkPasswordComplexity("Ch&&sec@ke99!"));
+
+        System.out.println("Invalid password: "
+                + login.checkPasswordComplexity("password"));
     }
 }
