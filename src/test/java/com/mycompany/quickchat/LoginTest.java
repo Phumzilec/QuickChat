@@ -148,4 +148,44 @@ public class LoginTest {
 
         assertFalse(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
     }
+        @Test
+    public void validPasswordReturnsSuccessMessage() {
+        Login login = new Login();
+
+        assertEquals(
+                "Password successfully captured.",
+                login.returnPasswordStatus("Ch&&sec@ke99!"));
+    }
+
+    @Test
+    public void invalidPasswordReturnsErrorMessage() {
+        Login login = new Login();
+
+        assertEquals(
+                "Password is not correctly formatted; please ensure "
+                + "that the password contains at least eight "
+                + "characters, a capital letter, a number, "
+                + "and a special character.",
+                login.returnPasswordStatus("password"));
+    }
+    
+        @Test
+    public void validCellPhoneReturnsSuccessMessage() {
+        Login login = new Login();
+
+        assertEquals(
+                "Cell number successfully captured.",
+                login.returnCellPhoneStatus("+27838968976"));
+    }
+
+    @Test
+    public void invalidCellPhoneReturnsErrorMessage() {
+        Login login = new Login();
+
+        assertEquals(
+                "Cell number is incorrectly formatted or does "
+                + "not contain an international code; please "
+                + "correct the number and try again.",
+                login.returnCellPhoneStatus("08966553"));
+    }
 }

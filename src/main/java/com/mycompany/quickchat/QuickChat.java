@@ -41,15 +41,8 @@ public class QuickChat {
             System.out.print("Enter a password: ");
             password = input.nextLine();
 
-            if (login.checkPasswordComplexity(password)) {
-                System.out.println("Password successfully captured.");
-            } else {
-                System.out.println(
-                        "Password is not correctly formatted; please ensure "
-                        + "that the password contains at least eight "
-                        + "characters, a capital letter, a number, "
-                        + "and a special character.");
-            }
+             System.out.println(login.returnPasswordStatus(password));
+            
         } while (!login.checkPasswordComplexity(password));
         
                 String cellPhoneNumber;
@@ -58,13 +51,9 @@ public class QuickChat {
             System.out.print("Enter your cellphone number with +27: ");
             cellPhoneNumber = input.nextLine();
 
-            if (login.checkCellPhoneNumber(cellPhoneNumber)) {
-                System.out.println("Cell phone number successfully added.");
-            } else {
-                System.out.println(
-                        "Cell phone number incorrectly formatted "
-                        + "or does not contain international code.");
-            }
+                        System.out.println(
+                    login.returnCellPhoneStatus(cellPhoneNumber));
+            
         } while (!login.checkCellPhoneNumber(cellPhoneNumber));
         
                 String registrationMessage = login.registerUser(

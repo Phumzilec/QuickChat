@@ -97,4 +97,24 @@ private boolean registered = false;
 
         return "Username or password incorrect, please try again.";
     }
+                    public String returnPasswordStatus(String password) {
+        if (checkPasswordComplexity(password)) {
+            return "Password successfully captured.";
+        }
+
+        return "Password is not correctly formatted; please ensure "
+                + "that the password contains at least eight "
+                + "characters, a capital letter, a number, "
+                + "and a special character.";
+    }
+                    
+                        public String returnCellPhoneStatus(String cellPhoneNumber) {
+        if (checkCellPhoneNumber(cellPhoneNumber)) {
+            return "Cell number successfully captured.";
+        }
+
+        return "Cell number is incorrectly formatted or does "
+                + "not contain an international code; please "
+                + "correct the number and try again.";
+    }
 }
