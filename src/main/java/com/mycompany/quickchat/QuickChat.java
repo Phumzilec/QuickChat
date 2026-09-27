@@ -4,13 +4,15 @@
 
 package com.mycompany.quickchat;
 
-/**
- *
- * @author Phumzile.Shabalala
- */
 public class QuickChat {
 
     public static void main(String[] args) {
-        System.out.println("Welcome to QuickChat");
+        Login login = new Login();
+
+        System.out.println("Valid username: "
+                + login.checkUserName("kyl_1"));
+
+        System.out.println("Invalid username: "
+                + login.checkUserName("kyle!!!!!!!"));
     }
 }
