@@ -16,5 +16,11 @@ public class QuickChat {
 
         System.out.println("Invalid password: "
                 + login.checkPasswordComplexity("password"));
+        
+        System.out.println("Valid cellphone: "
+        + login.checkCellPhoneNumber("+27838968976"));
+
+System.out.println("Invalid cellphone: "
+        + login.checkCellPhoneNumber("08966553"));
     }
 }

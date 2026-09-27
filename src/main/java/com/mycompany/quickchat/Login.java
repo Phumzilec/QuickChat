@@ -36,4 +36,15 @@ public class Login {
 
         return hasUppercase && hasNumber && hasSpecialCharacter;
     }
+    
+        /**
+     * Checks the international number format used in the POE example.
+     * Regex syntax reference: Oracle, Java SE 21 Pattern documentation.
+     * https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/regex/Pattern.html
+     * Accessed: 27 September 2026.
+     */
+    public boolean checkCellPhoneNumber(String cellPhoneNumber) {
+        return cellPhoneNumber != null
+                && cellPhoneNumber.matches("[+]27[1-9][0-9]{8}");
+    }
 }
