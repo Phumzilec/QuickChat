@@ -22,5 +22,20 @@ public class QuickChat {
 
 System.out.println("Invalid cellphone: "
         + login.checkCellPhoneNumber("08966553"));
+
+        System.out.println(login.registerUser(
+                "Kyle",
+                "Smith",
+                "kyl_1",
+                "Ch&&sec@ke99!",
+                "+27838968976"));
+        
+                System.out.println(login.registerUser(
+                "Kyle",
+                "Smith",
+                "kyle!!!!!!!",
+                "Ch&&sec@ke99!",
+                "+27838968976"));
+                
     }
 }
