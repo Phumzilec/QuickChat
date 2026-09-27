@@ -36,6 +36,20 @@ System.out.println("Invalid cellphone: "
                 "kyle!!!!!!!",
                 "Ch&&sec@ke99!",
                 "+27838968976"));
-                
+               
+                        System.out.println("Correct login: "
+                + login.loginUser("kyl_1", "Ch&&sec@ke99!"));
+
+        System.out.println("Wrong password: "
+                + login.loginUser("kyl_1", "wrongPassword"));
+
+        System.out.println("Wrong username: "
+                + login.loginUser("wrong", "Ch&&sec@ke99!"));
+        
+                System.out.println(login.returnLoginStatus(
+                "kyl_1", "Ch&&sec@ke99!"));
+
+        System.out.println(login.returnLoginStatus(
+                "kyl_1", "wrongPassword"));
     }
 }

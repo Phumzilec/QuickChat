@@ -84,4 +84,17 @@ private boolean registered = false;
 
         return "User registered successfully.";
     }
+            public boolean loginUser(String username, String password) {
+        return registered
+                && registeredUsername.equals(username)
+                && registeredPassword.equals(password);
+    }
+                public String returnLoginStatus(String username, String password) {
+        if (loginUser(username, password)) {
+            return "Welcome " + firstName + ", " + lastName
+                    + " it is great to see you again.";
+        }
+
+        return "Username or password incorrect, please try again.";
+    }
 }
