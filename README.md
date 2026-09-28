@@ -9,6 +9,7 @@
 ## Overview
 QuickChat is a Java console application that allows a user to register
 an account and then log in using the registered username and password.
+https://youtu.be/S0HlD1ZC9jg
 
 ## Features
 - Collects the user's first and last names.
@@ -24,6 +25,7 @@ an account and then log in using the registered username and password.
 ## Account storage
 The application stores one account in memory while it runs.
 Account details are not saved after the application closes.
+https://youtu.be/S0HlD1ZC9jg
 
 ## Requirements
 - JDK 25
