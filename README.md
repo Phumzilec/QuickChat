@@ -1,7 +1,7 @@
 # QuickChat — Part 1
 
 ## Student details
-- Name: Phumzile Clementines Shabalala
+- Name: Phumzile Clementine Shabalala
 - Student number: ST10503068
 - Module: PROG5121
 - Assessment: POE Part 1 — Registration and Login
