@@ -119,8 +119,12 @@ public class QuickChat {
 
             switch (choice) {
                 case "1":
-                    System.out.println(
-                            "Message entry will be added in the next step.");
+Message validMessage = new Message("+27718693002", "Hi Mike");
+System.out.println(validMessage.checkMessageLength());
+
+Message longMessage = new Message(
+        "+27718693002", new String(new char[251]).replace('\0', 'A'));
+System.out.println(longMessage.checkMessageLength());
                     break;
 
                 case "2":
