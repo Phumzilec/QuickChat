@@ -111,6 +111,7 @@ public class QuickChat {
                 "You may enter " + messageLimit + " messages.");
 
         int messagesEntered = 0;
+        int messagesSent = 0;
         String choice;
 
         do {
@@ -169,6 +170,7 @@ public class QuickChat {
                         }
 
                     } while (!validMessage);
+
                     String action;
 
                     do {
@@ -192,30 +194,32 @@ public class QuickChat {
                             confirmation = input.nextLine().trim();
                         } while (!confirmation.equals("0"));
 
-                        messagesEntered++;
-
                         System.out.println("Message disregarded.");
-                        System.out.println(
-                                "Messages entered: " + messagesEntered
-                                + " of " + messageLimit);
 
-                        break;
+                    } else {
+                        messagesSent++;
+
+                        System.out.println("\nMessage details:");
+                        System.out.println(
+                                "Message ID: " + message.getMessageID());
+                        System.out.println(
+                                "Message Hash: " + message.createMessageHash());
+                        System.out.println(
+                                "Recipient: " + message.getRecipient());
+                        System.out.println(
+                                "Message: " + message.getMessageText());
                     }
-                    System.out.println("\nMessage details:");
-                    System.out.println(
-                            "Message ID: " + message.getMessageID());
-                    System.out.println(
-                            "Message Hash: " + message.createMessageHash());
-                    System.out.println(
-                            "Recipient: " + message.getRecipient());
-                    System.out.println(
-                            "Message: " + message.getMessageText());
 
                     messagesEntered++;
 
                     System.out.println(
                             "Messages entered: " + messagesEntered
                             + " of " + messageLimit);
+
+                    if (messagesEntered == messageLimit) {
+                        System.out.println(
+                                "Total messages sent: " + messagesSent);
+                    }
 
                     break;
                 }
@@ -225,6 +229,8 @@ public class QuickChat {
                     break;
 
                 case "3":
+                    System.out.println(
+                            "Total messages sent: " + messagesSent);
                     System.out.println("Goodbye!");
                     break;
 
