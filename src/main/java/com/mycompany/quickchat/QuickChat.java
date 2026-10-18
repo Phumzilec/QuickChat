@@ -110,6 +110,7 @@ public class QuickChat {
         System.out.println(
                 "You may enter " + messageLimit + " messages.");
 
+        int messagesEntered = 0;
         String choice;
 
         do {
@@ -122,10 +123,71 @@ public class QuickChat {
             choice = input.nextLine().trim();
 
             switch (choice) {
-                case "1":
+                case "1": {
+                    if (messagesEntered >= messageLimit) {
+                        System.out.println(
+                                "You have reached your message limit.");
+                        break;
+                    }
+
+                    String recipient;
+                    Message recipientCheck;
+
+                    do {
+                        System.out.print(
+                                "Enter the recipient's cellphone number with +27: ");
+                        recipient = input.nextLine().trim();
+
+                        recipientCheck = new Message(recipient, "");
+
+                        System.out.println(
+                                recipientCheck.checkRecipientCell());
+
+                    } while (!login.checkCellPhoneNumber(recipient));
+
+                    String messageText;
+                    Message message;
+                    boolean validMessage;
+
+                    do {
+                        System.out.print(
+                                "Enter your message (maximum 250 characters): ");
+                        messageText = input.nextLine();
+
+                        message = new Message(
+                                recipient, messageText, messagesEntered);
+
+                        if (messageText.trim().isEmpty()) {
+                            System.out.println(
+                                    "Please enter a message that is not blank.");
+                            validMessage = false;
+                        } else {
+                            System.out.println(
+                                    message.checkMessageLength());
+
+                            validMessage = messageText.length() <= 250;
+                        }
+
+                    } while (!validMessage);
+
+                    System.out.println("\nMessage details:");
                     System.out.println(
-                            "Message entry will be added in the next step.");
+                            "Message ID: " + message.getMessageID());
+                    System.out.println(
+                            "Message Hash: " + message.createMessageHash());
+                    System.out.println(
+                            "Recipient: " + message.getRecipient());
+                    System.out.println(
+                            "Message: " + message.getMessageText());
+
+                    messagesEntered++;
+
+                    System.out.println(
+                            "Messages entered: " + messagesEntered
+                            + " of " + messageLimit);
+
                     break;
+                }
 
                 case "2":
                     System.out.println("Coming Soon.");
