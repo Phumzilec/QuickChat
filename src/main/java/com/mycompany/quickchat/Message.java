@@ -87,4 +87,16 @@ public class Message {
                 + "not contain an international code. Please correct "
                 + "the number and try again.";
     }
+        public String SentMessage(String action) {
+        switch (action) {
+            case "1":
+                return "Message successfully sent.";
+
+            case "2":
+                return "Press 0 to delete the message.";
+
+            default:
+                return "Invalid option. Please choose 1 or 2.";
+        }
+    }
 }

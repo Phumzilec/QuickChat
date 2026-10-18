@@ -169,7 +169,38 @@ public class QuickChat {
                         }
 
                     } while (!validMessage);
+                    String action;
 
+                    do {
+                        System.out.println("\nWhat would you like to do?");
+                        System.out.println("1) Send Message");
+                        System.out.println("2) Disregard Message");
+                        System.out.print("Enter your choice: ");
+
+                        action = input.nextLine().trim();
+
+                        System.out.println(message.SentMessage(action));
+
+                    } while (!action.equals("1") && !action.equals("2"));
+
+                    if (action.equals("2")) {
+                        String confirmation;
+
+                        do {
+                            System.out.print(
+                                    "Enter 0 to confirm deletion: ");
+                            confirmation = input.nextLine().trim();
+                        } while (!confirmation.equals("0"));
+
+                        messagesEntered++;
+
+                        System.out.println("Message disregarded.");
+                        System.out.println(
+                                "Messages entered: " + messagesEntered
+                                + " of " + messageLimit);
+
+                        break;
+                    }
                     System.out.println("\nMessage details:");
                     System.out.println(
                             "Message ID: " + message.getMessageID());
