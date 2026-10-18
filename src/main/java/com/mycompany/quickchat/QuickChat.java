@@ -89,7 +89,23 @@ public class QuickChat {
         } while (!loggedIn);
 
         System.out.println("\nWelcome to QuickChat.");
+        int messageLimit = 0;
 
+        while (messageLimit <= 0) {
+            System.out.print("How many messages would you like to enter? ");
+
+            try {
+                messageLimit = Integer.parseInt(input.nextLine().trim());
+
+                if (messageLimit <= 0) {
+                    System.out.println("Please enter a number greater than 0.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid whole number.");
+            }
+        }
+
+        System.out.println("You may enter " + messageLimit + " messages.");
         String choice;
 
         do {
