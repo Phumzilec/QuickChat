@@ -119,8 +119,11 @@ public class QuickChat {
 
             switch (choice) {
                 case "1":
+
                     System.out.println(
                             "Message entry will be added in the next step.");
+                    break;
+
                 case "2":
                     System.out.println("Coming Soon.");
                     break;

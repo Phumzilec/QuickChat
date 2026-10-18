@@ -1,13 +1,20 @@
 package com.mycompany.quickchat;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Message {
 
     private final String recipient;
     private final String messageText;
+    private final String messageID;
 
     public Message(String recipient, String messageText) {
         this.recipient = recipient;
         this.messageText = messageText;
+
+        this.messageID = Long.toString(
+                ThreadLocalRandom.current().nextLong(
+                        1_000_000_000L, 10_000_000_000L));
     }
 
     public String getRecipient() {
@@ -16,6 +23,14 @@ public class Message {
 
     public String getMessageText() {
         return messageText;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public boolean checkMessageID() {
+        return messageID.matches("[0-9]{10}");
     }
 
     public String checkMessageLength() {
@@ -29,7 +44,8 @@ public class Message {
                 + extraCharacters
                 + "; please reduce the size.";
     }
-        public String checkRecipientCell() {
+
+    public String checkRecipientCell() {
         Login validator = new Login();
 
         if (validator.checkCellPhoneNumber(recipient)) {
