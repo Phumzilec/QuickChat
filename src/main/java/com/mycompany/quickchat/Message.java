@@ -10,6 +10,9 @@ public class Message {
     private final String messageID;
     private final int messageNumber;
 
+    private static int totalMessagesSent = 0;
+    private boolean sent = false;
+
     public Message(String recipient, String messageText) {
         this(recipient, messageText, 0);
     }
@@ -87,9 +90,14 @@ public class Message {
                 + "not contain an international code. Please correct "
                 + "the number and try again.";
     }
-        public String SentMessage(String action) {
+
+    public String SentMessage(String action) {
         switch (action) {
             case "1":
+                if (!sent) {
+                    totalMessagesSent++;
+                    sent = true;
+                }
                 return "Message successfully sent.";
 
             case "2":
@@ -98,5 +106,9 @@ public class Message {
             default:
                 return "Invalid option. Please choose 1 or 2.";
         }
+    }
+
+    public static int returnTotalMessagess() {
+        return totalMessagesSent;
     }
 }
