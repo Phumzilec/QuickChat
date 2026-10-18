@@ -3,8 +3,7 @@ package com.mycompany.quickchat;
 import java.util.Scanner;
 
 /**
- * Runs the QuickChat console registration and login process. Uses the Login
- * class to validate details and authenticate the user.
+ * Runs registration, login, and the QuickChat console menu.
  */
 public class QuickChat {
 
@@ -89,6 +88,7 @@ public class QuickChat {
         } while (!loggedIn);
 
         System.out.println("\nWelcome to QuickChat.");
+
         int messageLimit = 0;
 
         while (messageLimit <= 0) {
@@ -98,14 +98,18 @@ public class QuickChat {
                 messageLimit = Integer.parseInt(input.nextLine().trim());
 
                 if (messageLimit <= 0) {
-                    System.out.println("Please enter a number greater than 0.");
+                    System.out.println(
+                            "Please enter a number greater than 0.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid whole number.");
+                System.out.println(
+                        "Please enter a valid whole number.");
             }
         }
 
-        System.out.println("You may enter " + messageLimit + " messages.");
+        System.out.println(
+                "You may enter " + messageLimit + " messages.");
+
         String choice;
 
         do {
@@ -119,7 +123,6 @@ public class QuickChat {
 
             switch (choice) {
                 case "1":
-
                     System.out.println(
                             "Message entry will be added in the next step.");
                     break;
@@ -136,6 +139,7 @@ public class QuickChat {
                     System.out.println(
                             "Invalid option. Please enter 1, 2, or 3.");
             }
+
         } while (!choice.equals("3"));
 
         input.close();
