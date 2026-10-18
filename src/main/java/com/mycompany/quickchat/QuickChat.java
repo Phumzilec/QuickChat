@@ -1,31 +1,104 @@
 package com.mycompany.quickchat;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Runs registration, login, and the QuickChat console menu.
+ * Runs the console registration, login and message-processing features.
  */
 public class QuickChat {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        Login login = new Login();
+        Message.resetSession();
 
-        System.out.println("Welcome to QuickChat");
+        try (Scanner input = new Scanner(System.in)) {
+            Login login = new Login();
 
-        System.out.print("Enter your first name: ");
-        String firstName = input.nextLine();
+            registerAndLogin(input, login);
 
-        System.out.print("Enter your last name: ");
-        String lastName = input.nextLine();
+            System.out.println("\nWelcome to QuickChat.");
 
-        System.out.println("Hello " + firstName + " " + lastName);
+            int messageLimit = readMessageLimit(input);
+            boolean limitReached = false;
+            String choice;
+
+            do {
+                System.out.println("\nPlease choose an option:");
+                System.out.println("1) Send Messages");
+                System.out.println("2) Show recently sent messages");
+                System.out.println("3) Quit");
+
+                choice = read(input, "Enter your choice: ");
+
+                switch (choice) {
+                    case "1":
+                        if (limitReached) {
+                            System.out.println(
+                                    "You have reached your message limit.");
+                        } else {
+                            for (int number = 0;
+                                    number < messageLimit;
+                                    number++) {
+
+                                System.out.println(
+                                        "\nMessage " + (number + 1)
+                                        + " of " + messageLimit);
+
+                                Message message =
+                                        readMessage(input, number);
+
+                                processMessage(input, message);
+                            }
+
+                            limitReached = true;
+
+                            System.out.println(
+                                    "Total messages sent: "
+                                    + Message.returnTotalMessagess());
+                        }
+                        break;
+
+                    case "2":
+                        System.out.println("Coming Soon.");
+                        break;
+
+                    case "3":
+                        System.out.println("\nSent messages:");
+                        System.out.println(Message.printMessages());
+
+                        System.out.println(
+                                "Total messages sent: "
+                                + Message.returnTotalMessagess());
+
+                        System.out.println("Goodbye!");
+                        break;
+
+                    default:
+                        System.out.println(
+                                "Invalid option. Please enter 1, 2, or 3.");
+                }
+
+            } while (!"3".equals(choice));
+        }
+    }
+
+    private static String read(Scanner input, String prompt) {
+        System.out.print(prompt);
+        return input.nextLine().trim();
+    }
+
+    private static void registerAndLogin(
+            Scanner input, Login login) {
+
+        System.out.println("QuickChat registration");
+
+        String firstName = read(input, "Enter your first name: ");
+        String lastName = read(input, "Enter your last name: ");
 
         String username;
 
         do {
-            System.out.print("Enter a username: ");
-            username = input.nextLine();
+            username = read(input, "Enter a username: ");
 
             if (login.checkUserName(username)) {
                 System.out.println("Username successfully captured.");
@@ -35,6 +108,7 @@ public class QuickChat {
                         + "that your username contains an underscore and "
                         + "is no more than five characters in length.");
             }
+
         } while (!login.checkUserName(username));
 
         String password;
@@ -47,199 +121,148 @@ public class QuickChat {
 
         } while (!login.checkPasswordComplexity(password));
 
-        String cellPhoneNumber;
+        String phone;
 
         do {
-            System.out.print("Enter your cellphone number with +27: ");
-            cellPhoneNumber = input.nextLine();
+            phone = read(
+                    input, "Enter your cellphone number with +27: ");
 
-            System.out.println(
-                    login.returnCellPhoneStatus(cellPhoneNumber));
+            System.out.println(login.returnCellPhoneStatus(phone));
 
-        } while (!login.checkCellPhoneNumber(cellPhoneNumber));
+        } while (!login.checkCellPhoneNumber(phone));
 
-        String registrationMessage = login.registerUser(
-                firstName,
-                lastName,
-                username,
-                password,
-                cellPhoneNumber);
+        System.out.println(login.registerUser(
+                firstName, lastName, username, password, phone));
 
-        System.out.println(registrationMessage);
-
-        String loginUsername;
-        String loginPassword;
         boolean loggedIn;
 
         System.out.println("Please log in.");
 
         do {
-            System.out.print("Enter your username: ");
-            loginUsername = input.nextLine();
+            String user = read(input, "Enter your username: ");
 
             System.out.print("Enter your password: ");
-            loginPassword = input.nextLine();
+            String pass = input.nextLine();
 
-            loggedIn = login.loginUser(loginUsername, loginPassword);
+            loggedIn = login.loginUser(user, pass);
 
-            System.out.println(
-                    login.returnLoginStatus(loginUsername, loginPassword));
+            System.out.println(login.returnLoginStatus(user, pass));
 
         } while (!loggedIn);
+    }
 
-        System.out.println("\nWelcome to QuickChat.");
-
-        int messageLimit = 0;
-
-        while (messageLimit <= 0) {
-            System.out.print("How many messages would you like to enter? ");
-
+    private static int readMessageLimit(Scanner input) {
+        while (true) {
             try {
-                messageLimit = Integer.parseInt(input.nextLine().trim());
+                int limit = Integer.parseInt(read(
+                        input,
+                        "How many messages would you like to enter? "));
 
-                if (messageLimit <= 0) {
-                    System.out.println(
-                            "Please enter a number greater than 0.");
+                if (limit > 0) {
+                    return limit;
                 }
+
             } catch (NumberFormatException e) {
-                System.out.println(
-                        "Please enter a valid whole number.");
+                // Invalid input is handled by the message below.
             }
+
+            System.out.println(
+                    "Please enter a valid whole number greater than 0.");
         }
+    }
 
-        System.out.println(
-                "You may enter " + messageLimit + " messages.");
+    private static Message readMessage(
+            Scanner input, int number) {
 
-        int messagesEntered = 0;
-        String choice;
+        String recipient;
+        Message recipientCheck;
 
         do {
-            System.out.println("\nPlease choose an option:");
-            System.out.println("1) Send Messages");
-            System.out.println("2) Show recently sent messages");
-            System.out.println("3) Quit");
-            System.out.print("Enter your choice: ");
+            recipient = read(
+                    input,
+                    "Enter the recipient's cellphone number with +27: ");
 
-            choice = input.nextLine().trim();
+            recipientCheck = new Message(recipient, "", number);
 
-            switch (choice) {
-                case "1": {
-                    if (messagesEntered >= messageLimit) {
-                        System.out.println(
-                                "You have reached your message limit.");
-                        break;
-                    }
+            System.out.println(recipientCheck.checkRecipientCell());
 
-                    String recipient;
-                    Message recipientCheck;
+        } while (!recipientCheck.isRecipientValid());
 
-                    do {
-                        System.out.print(
-                                "Enter the recipient's cellphone number with +27: ");
-                        recipient = input.nextLine().trim();
+        Message message;
 
-                        recipientCheck = new Message(recipient, "");
+        do {
+            System.out.print(
+                    "Enter your message (maximum 250 characters): ");
 
-                        System.out.println(
-                                recipientCheck.checkRecipientCell());
+            message = new Message(
+                    recipient, input.nextLine(), number);
 
-                    } while (!login.checkCellPhoneNumber(recipient));
+            System.out.println(message.checkMessageLength());
 
-                    String messageText;
-                    Message message;
-                    boolean validMessage;
+        } while (!message.isMessageValid());
 
-                    do {
-                        System.out.print(
-                                "Enter your message (maximum 250 characters): ");
-                        messageText = input.nextLine();
+        return message;
+    }
 
-                        message = new Message(
-                                recipient, messageText, messagesEntered);
+    private static void processMessage(
+            Scanner input, Message message) {
 
-                        if (messageText.trim().isEmpty()) {
-                            System.out.println(
-                                    "Please enter a message that is not blank.");
-                            validMessage = false;
-                        } else {
-                            System.out.println(
-                                    message.checkMessageLength());
+        while (true) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("1) Send Message");
+            System.out.println("2) Disregard Message");
+            System.out.println("3) Store Message to send later");
 
-                            validMessage = messageText.length() <= 250;
-                        }
+            String action = read(input, "Enter your choice: ");
 
-                    } while (!validMessage);
+            if (!"1".equals(action)
+                    && !"2".equals(action)
+                    && !"3".equals(action)) {
 
-                    String action;
-
-                    do {
-                        System.out.println("\nWhat would you like to do?");
-                        System.out.println("1) Send Message");
-                        System.out.println("2) Disregard Message");
-                        System.out.print("Enter your choice: ");
-
-                        action = input.nextLine().trim();
-
-                        System.out.println(message.SentMessage(action));
-
-                    } while (!action.equals("1") && !action.equals("2"));
-
-                    if (action.equals("2")) {
-                        String confirmation;
-
-                        do {
-                            System.out.print(
-                                    "Enter 0 to confirm deletion: ");
-                            confirmation = input.nextLine().trim();
-                        } while (!confirmation.equals("0"));
-
-                        System.out.println("Message disregarded.");
-
-                    } else {
-                        System.out.println("\nMessage details:");
-                        System.out.println(
-                                "Message ID: " + message.getMessageID());
-                        System.out.println(
-                                "Message Hash: " + message.createMessageHash());
-                        System.out.println(
-                                "Recipient: " + message.getRecipient());
-                        System.out.println(
-                                "Message: " + message.getMessageText());
-                    }
-
-                    messagesEntered++;
-
-                    System.out.println(
-                            "Messages entered: " + messagesEntered
-                            + " of " + messageLimit);
-
-                    if (messagesEntered == messageLimit) {
-                        System.out.println(
-                                "Total messages sent: "
-                                + Message.returnTotalMessagess());
-                    }
-
-                    break;
-                }
-
-                case "2":
-                    System.out.println("Coming Soon.");
-                    break;
-
-                case "3":
-                    System.out.println(
-                            "Total messages sent: "
-                            + Message.returnTotalMessagess());
-                    System.out.println("Goodbye!");
-                    break;
-
-                default:
-                    System.out.println(
-                            "Invalid option. Please enter 1, 2, or 3.");
+                System.out.println(
+                        "Invalid option. Please choose 1, 2, or 3.");
+                continue;
             }
 
-        } while (!choice.equals("3"));
+            if ("2".equals(action)) {
+                System.out.println("Press 0 to delete the message.");
 
-        input.close();
+                while (!"0".equals(read(
+                        input, "Enter 0 to confirm deletion: "))) {
+
+                    System.out.println(
+                            "Please enter 0 to confirm deletion.");
+                }
+            }
+
+            try {
+                String result = message.SentMessage(action);
+
+                if ("2".equals(action)) {
+                    System.out.println("Message disregarded.");
+                } else {
+                    System.out.println(result);
+                }
+
+                if ("1".equals(action)) {
+                    System.out.println(message.details());
+
+                } else if ("3".equals(action)) {
+                    System.out.println(
+                            "Saved to: "
+                            + Message.STORAGE_FILE.toAbsolutePath());
+                }
+
+                return;
+
+            } catch (IOException e) {
+                System.out.println(
+                        "The message could not be stored: "
+                        + e.getMessage());
+
+                System.out.println(
+                        "Choose another action or retry storage.");
+            }
+        }
     }
 }
