@@ -29,4 +29,15 @@ public class Message {
                 + extraCharacters
                 + "; please reduce the size.";
     }
+        public String checkRecipientCell() {
+        Login validator = new Login();
+
+        if (validator.checkCellPhoneNumber(recipient)) {
+            return "Cell phone number successfully captured.";
+        }
+
+        return "Cell phone number is incorrectly formatted or does "
+                + "not contain an international code. Please correct "
+                + "the number and try again.";
+    }
 }
